@@ -18,7 +18,7 @@
 <div align=center>
    <img src="./assets/teaser.png">
    <figcaption>
-	  ShapeNet chair examples.
+	  3D chair shapes from <a href=https://shapenet.org/ target="_blank">ShapeNet</a>. The  <a href=https://shapenet.org/ target="_blank">ShapeNet</a> dataset is a large collection of 3D models spanning various object categories, with the 3D chair category being one of the most popular. It inclues thousands of diverse chair models, ranging in style and complexity. These models are typically represented as 3D meshes but can be converted into various different formats: voxel grids or point clouds. In this project, we aim to build a diffusion model sampling 3D shapes represented by voxels.
     </figcaption>
 </div>
 
@@ -33,10 +33,7 @@ The dataset consists of 2,658 chairs represented by binary voxels, where a value
 python load_data.py
 ```
 
-You can visualize the voxel data in `visualize.ipynb`.
-<div align=center>
-  <img src="./assets/sample.png" width="768"/>
-</div>
+A 3D voxel visualization code is in `visualize.ipynb`.
 
 ## Tasks
 Your task is to implement a diffusion model that generates 3D voxels. You have the freedom to explore any methods or techniques to handle the hih-resolution data efficiently. After implementing the model, run the evaluaiton code provided and report the results. Below are further details on the evaluation.
