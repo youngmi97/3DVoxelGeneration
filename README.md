@@ -39,6 +39,9 @@ A 3D voxel visualization code is in `visualize.ipynb`.
 Your task is to implement a diffusion model that generates 3D voxels. You have the freedom to explore any methods or techniques to handle the hih-resolution data efficiently. After implementing the model, run the evaluaiton code provided and report the results. Below are further details on the evaluation.
 
 ## Evaluation
+⚠️ **_The evaluation script will be provided soon._**
+
+
 Sample 1,000 voxels using your model and save them in `.npy` format with a shape of `(1000, 128, 128, 128)`. After saving the data, load the samples and run the following command to perform the quantitative evaluation:
 
 ```
