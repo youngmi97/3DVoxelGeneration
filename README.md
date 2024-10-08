@@ -39,13 +39,14 @@ A 3D voxel visualization code is in `visualize.ipynb`.
 Your task is to implement a diffusion model that generates 3D voxels. You have the freedom to explore any methods or techniques to handle the hih-resolution data efficiently. After implementing the model, run the evaluaiton code provided and report the results. Below are further details on the evaluation.
 
 ## Evaluation
-⚠️ **_The evaluation script will be provided soon._**
+To evaluate the performance of our trained 3D voxel generative model, we use the Jensen-Shannon Divergence (JSD) as a similarity measure between the generated samples and the reference set, following the approach proposed by Panos et al. 
+
+The core idea is to treat each 3D voxel set as a probability distribution, where the value at each voxel represents the probability of occupancy. For each voxel set, we begin by counting the number of nonzero points in each voxel across all samples. These counts are then normalized by dividing them by the total number of nonzero points, resulting in a probability distribution that reflects the likelihood of occupancy at each voxel in 3D space. Once both sets are converted into probability distributions, we calculate the Jensen-Shannon Divergence (JSD) to measure the difference between the two distributions, providing a quantification of their similarity.
 
 
-Sample 1,000 voxels using your model and save them in `.npy` format with a shape of `(1000, 128, 128, 128)`. After saving the data, load the samples and run the following command to perform the quantitative evaluation:
-
+Sample 2,000 voxels using your model and save them in `.npy` format with a shape of `(2000, 128, 128, 128)`. After saving the data, run the following command to measure JSD:
 ```
-python run_evaluation.py {PATH/TO/YOUR_SAMPLE_DATA.NPY}
+python eval.py {PATH/TO/YOUR_SAMPLE_DATA.NPY}
 ```
 
 ## Acknowledgement 
