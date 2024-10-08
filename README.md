@@ -50,7 +50,11 @@ Sample 2,000 voxels using your model and save them in `.npy` format with a shape
 python eval.py {PATH/TO/YOUR_SAMPLE_DATA.NPY}
 ```
 
-Report your JSD score and at least 8 visualization of your samples in a single pdf file.
+You will get a full credit if your JSD score is lower than 0.3.
+
+## What to Submit
+In a single pdf file, report your JSD score as a screenshot and at least 8 visualization of your samples.
+Compress your source code and the pdf file into a zip file and submit it.
 
 ## Acknowledgement 
 The dataset is from <a href=https://shapenet.org/ target="_blank">ShapeNet</a>.
