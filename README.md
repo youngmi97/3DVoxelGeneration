@@ -27,29 +27,37 @@ This project aims to build a 3D diffusion model, specifically targeting 3D volum
 
 
 ## Data Specification
-The dataset consists of 2,658 chairs represented by binary voxels, where a value of 1 indicates the object's surface at that position. To obtain the voxel data, we voxelize point clouds from the ShapeNet dataset. Run the following command to preprocess the data:
+The dataset consists of three categories of 3D shapes from the ShapeNet dataset: airplanes, chairs, and tables, with 2,658, 1,958, and 3,835 shapes for training in each category, respectively. Each shape is represented by a binary voxel, where a value of 1 indicates the object's surface at that position. To obtain the voxel data, we voxelize point clouds from the ShapeNet dataset. Run the following commands to install required dependencies and to preprocess the data:
 
 ```
+pip install -r requirements.txt
 python load_data.py
 ```
 
 A 3D voxel visualization code is in `visualize.ipynb`.
 
 ## Tasks
-Your task is to implement a diffusion model that generates 3D voxels. You have the freedom to explore any methods or techniques to handle the hih-resolution data efficiently. After implementing the model, run the evaluaiton code provided and report the results. Below are further details on the evaluation.
+Your task is to implement diffusion models that sample 3D voxels of the three categories. You can implement either a single class-conditioned model that can sample all categories or a separate unconditional model for each category. You can even convert the provided voxel data into any format, such as meshes or point clouds so that the network takes the converted 3D data as input. __The only requirement is that the final output of the model must be 3D voxels.__
+
+After implementing the model, run the evaluaiton code provided and report the results. Below are further details on the evaluation.
+
 
 ## Evaluation
-To assess quality and diversity of the generated samples, we follow Achlioptas et al. [1] and use Coverage (COV), Minimum Matching Distance (MMD), 1-Nearest Neighbor Accuracy (1-NNA), and Jensen-Shannon Divergence (JSD). 
+To assess the quality and diversity of the generated samples, we follow Achlioptas et al. [1] and use Jensen-Shannon Divergence (JSD), Minimum Matching Distance (MMD), and Coverage (COV). 
 
-Sample 2,000 voxels using your model and save them in `.npy` format with a shape of `(2000, 128, 128, 128)`. At the end of the sampling process, discretize the values to either 0 or 1 by applying a threshold, setting the value to 1 if x > 0.5 and to 0 otherwise. Once the data is saved, run the following command to measure JSD:
+JSD treats voxel sets as probability distributions over the 3D space, where each voxel grid represents the likelihood of being occupied. It then measures the Jensen-Shannon Divergence between the two input voxel sets, providing a similarity measure from the probabilistic perspective. In MMD and COV, we first compute the nearest neighbor in the reference set for each voxel in the sample set. COV evaluates the diversity of the samples by measuring how many voxels in the reference set are covered by the nearest neighbors from the sample set. On the other hand, MMD assesses the fidelity of the samples by calculating the distance between each voxel in the sample set and its corresponding nearest neighbor in the reference set.
+
+__*For each category*__, sample 1,000 voxels using your model and save them in `.npy` format with a shape of `(1000, 128, 128, 128)`. At the end of the sampling process, discretize the values to either 0 or 1 by applying a threshold, setting the value to 1 if x > 0.5 and to 0 otherwise. Once the data is saved, run the following command to measure JSD, MMD, and COV:
 
 ```
 python eval.py {PATH/TO/YOUR_SAMPLE_DATA.NPY}
 ```
 
+Note that the evaluation script may take around 30 minutes to complete.
+
 
 ## What to Submit
-In a single pdf file, report screenshots of your quantitative scores along with at least 8 visualization of your samples.
+In a single PDF file, report screenshots of your quantitative scores along with at least 8 visualization of your samples __for each category__.
 Compress your source code and the pdf file into a zip file and submit it.
 
 ## Acknowledgement 
