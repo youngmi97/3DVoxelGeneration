@@ -34,6 +34,12 @@ pip install -r requirements.txt
 python load_data.py
 ```
 
+__In case the ShapeNet download link is not accessible, please download the dataset on your local machine from [here](https://onedrive.live.com/?authkey=%21ALKmMDfOhwxH43k&id=0CE615B143FC4BDC%21188223&cid=0CE615B143FC4BDC&parId=root&parQt=sharedby&o=OneUp) and send the file to your remote machine.__ 
+To send the file in your local machine to the remote server, you can refer to the following `rsync` command:
+```
+rsync -azP -e "ssh -i {PATH/TO/PRIVATE_KEY}" {PATH/TO/LOCAL_FILE} root@{KCLOUD_IP}:{PATH/TO/REMOTE/DESTINATION}
+```
+
 A 3D voxel visualization code is in `visualize.ipynb`.
 
 ## Tasks
