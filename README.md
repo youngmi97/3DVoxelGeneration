@@ -18,12 +18,12 @@
 <div align=center>
    <img src="./assets/teaser.png">
    <figcaption>
-	  3D chair shapes from the <a href=https://shapenet.org/ target="_blank">ShapeNet</a> dataset. The  <a href=https://shapenet.org/ target="_blank">ShapeNet</a> dataset is a large collection of 3D models spanning various object categories, with the 3D chair category being one of the most popular. It includes thousands of diverse chair models, ranging in style and complexity. These models are typically represented as 3D meshes but can be converted into various different formats: voxel grids or point clouds. In this project, we aim to build a diffusion model sampling 3D shapes represented by voxels.
+	  3D shapes from the <a href=https://shapenet.org/ target="_blank">ShapeNet</a> dataset. The  <a href=https://shapenet.org/ target="_blank">ShapeNet</a> dataset is a large collection of 3D models spanning various object categories. In this project, we specifically focus on three object categories: chairs, airplanes, and tables, which are among the most popular and vary in style and complexity. These 3D shapes are typically represented as 3D meshes but can be converted into various different formats: voxel grids or point clouds. We aim to build a diffusion model sampling 3D shapes represented by voxels.
     </figcaption>
 </div>
 
 ## Description
-This project aims to build a 3D diffusion model, specifically targeting 3D volume diffusion. We train the model using voxel data at a resolution of (128, 128, 128) from the <a href=https://shapenet.org/ target="_blank">ShapeNet</a> chair class. A major challenge will be efficiently handling this high-resolution data within limited VRAM constraints.
+This project aims to build a 3D diffusion model, specifically targeting 3D volume diffusion. We train the model using voxel data at a resolution of (128, 128, 128) from the <a href=https://shapenet.org/ target="_blank">ShapeNet</a> dataset. A major challenge will be efficiently handling this high-resolution data within limited VRAM constraints.
 
 
 ## Data Specification
