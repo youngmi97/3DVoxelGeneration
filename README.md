@@ -35,6 +35,7 @@ python load_data.py
 ```
 
 __In case the ShapeNet download link is not accessible, please download the dataset on your local machine from [here](https://onedrive.live.com/?authkey=%21ALKmMDfOhwxH43k&id=0CE615B143FC4BDC%21188223&cid=0CE615B143FC4BDC&parId=root&parQt=sharedby&o=OneUp) and send the file to your remote machine.__ 
+
 To send the file in your local machine to the remote server, you can refer to the following `rsync` command:
 ```
 rsync -azP -e "ssh -i {PATH/TO/PRIVATE_KEY}" {PATH/TO/LOCAL_FILE} root@{KCLOUD_IP}:{PATH/TO/REMOTE/DESTINATION}
@@ -43,7 +44,9 @@ rsync -azP -e "ssh -i {PATH/TO/PRIVATE_KEY}" {PATH/TO/LOCAL_FILE} root@{KCLOUD_I
 A 3D voxel visualization code is in `visualize.ipynb`.
 
 ## Tasks
-Your task is to implement diffusion models that sample 3D voxels of the three categories. You can implement either a single class-conditioned model that can sample all categories or a separate unconditional model for each category. You can even convert the provided voxel data into any format, such as meshes or point clouds so that the network takes the converted 3D data as input. __The only requirement is that the final output of the model must be 3D voxels.__
+Your task is to implement diffusion models that sample 3D voxels of the three categories. You can implement either a single class-conditioned model that can sample all categories or a separate unconditional model for each category. You can even convert the provided voxel data into any format, such as meshes or point clouds so that the network takes the converted 3D data as input. 
+
+__The only requirement is that the final output of the model must be 3D voxels.__
 
 After implementing the model, run the evaluaiton code provided and report the results. Below are further details on the evaluation.
 
@@ -63,7 +66,7 @@ Note that the evaluation script may take around 30 minutes to complete.
 
 
 ## What to Submit
-In a single PDF file, report screenshots of your quantitative scores along with at least 8 visualization of your samples __for each category__.
+In a single PDF file, report screenshots of your __quantitative scores (JSD, MMD, and COV)__ along with at least 8 visualization of your samples __for each category__.
 Compress your source code and the pdf file into a zip file and submit it.
 
 ## Acknowledgement 
