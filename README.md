@@ -56,8 +56,9 @@ JSD treats voxel sets as probability distributions over the 3D space, where each
 __*For each category*__, sample 1,000 voxels using your model and save them in `.npy` format with a shape of `(1000, 128, 128, 128)`. At the end of the sampling process, discretize the values to either 0 or 1 by applying a threshold, setting the value to 1 if x > 0.5 and to 0 otherwise. Once the data is saved, run the following command to measure JSD, MMD, and COV:
 
 ```
-python eval.py {PATH/TO/YOUR_SAMPLE_DATA.NPY}
+python eval.py {CATEGORY} {PATH/TO/YOUR_SAMPLE_DATA.NPY}
 ```
+, where `CATEGORY` is one of `chair`, `airplane`, or `table`.
 
 Note that the evaluation script may take around 30 minutes to complete.
 

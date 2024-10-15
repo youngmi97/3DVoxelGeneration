@@ -183,14 +183,21 @@ def lgan_mmd_cov(all_dist):
 
 
 if __name__ == "__main__":
-    sample_path = sys.argv[1]
+    category = sys.argv[1]
+    sample_path = sys.argv[2]
+    
+    assert category in ["chair", "airplane", "table"], f"{category} should be one of `chair`, `airplane`, or `table`."
+
     X_gen = torch.load(sample_path).float()
     # X_gen = torch.rand(1000, 128, 128, 128)  # For testing.
     # X_gen = (X_gen > 0.98).float()
 
     shapenet_dir = "./data/hdf5_data"  # TODO: CHANGE THE PATH IF NEEDED.
-    test_set_path = os.path.join(shapenet_dir, f"chair_voxels_test.npy")
-    val_set_path = os.path.join(shapenet_dir, f"chair_voxels_val.npy")
+    test_set_path = os.path.join(shapenet_dir, f"{category}_voxels_test.npy")
+    val_set_path = os.path.join(shapenet_dir, f"{category}_voxels_val.npy")
+    assert os.path.exists(test_set_path), f"{test_set_path} not exist."
+    assert os.path.exists(val_set_path), f"{val_set_path} not exist."
+
     test_set = torch.from_numpy(np.load(test_set_path))
     val_set = torch.from_numpy(np.load(val_set_path))
     X_ref = torch.cat([test_set, val_set]).float()
