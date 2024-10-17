@@ -46,7 +46,7 @@ A 3D voxel visualization code is in `visualize.ipynb`.
 ## Tasks
 Your task is to implement diffusion models that sample 3D voxels of the three categories. You can implement either a single class-conditioned model that can sample all categories or a separate unconditional model for each category. You can even convert the provided voxel data into any format, such as meshes or point clouds so that the network takes the converted 3D data as input. 
 
-__The only requirement is that the final output of the model must be 3D voxels.__
+__The only implementation requirement is that the final output of the model must be 3D voxels, i.e., the output of your network should be voxels only, not other representations, such as point clouds or meshes, that require post-processing to be converted into voxels.__
 
 After implementing the model, run the evaluaiton code provided and report the results. Below are further details on the evaluation.
 
