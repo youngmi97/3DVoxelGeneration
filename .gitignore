@@ -4,3 +4,4 @@ __pycache__/
 ckpt/
 generated_samples/
 wandb/
+generated_samples/*.npy
