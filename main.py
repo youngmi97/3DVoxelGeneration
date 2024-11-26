@@ -19,13 +19,13 @@ def train_and_evaluate(category, batch_size=32, device='cuda'):
     val_loader = DataLoader(val_dataset, batch_size=batch_size, num_workers=4, pin_memory=True)
     
     print(f"[*] Training Autoencoder for {category}...")
-    # autoencoder = VoxelAutoencoder(input_size=64).to(device)
-    # train_autoencoder(autoencoder, train_loader, val_loader, category, device)
+    autoencoder = VoxelAutoencoder(input_size=64).to(device)
+    train_autoencoder(autoencoder, train_loader, val_loader, category, device)
 
     # USE CHECKPOINT
-    autoencoder = VoxelAutoencoder(input_size=64).to(device)
-    autoencoder.load_state_dict(torch.load(f'ckpt/autoencoder_{category}_epoch_{90}.pt'))
-    autoencoder.eval()
+    # autoencoder = VoxelAutoencoder(input_size=64).to(device)
+    # autoencoder.load_state_dict(torch.load(f'ckpt/autoencoder_{category}_epoch_{90}.pt'))
+    # autoencoder.eval()
     
     print(f"[*] Training Diffusion Model for {category}...")
     diffusion = ImprovedLatentDiffusionModel(autoencoder).to(device)
