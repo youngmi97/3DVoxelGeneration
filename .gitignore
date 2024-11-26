@@ -5,3 +5,4 @@ ckpt/
 generated_samples/
 wandb/
 generated_samples/*.npy
+*.npy
