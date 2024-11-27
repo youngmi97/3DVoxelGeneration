@@ -276,3 +276,17 @@ def DiT_S(input_size=32, **kwargs):
         proj_drop=0.1,
         **kwargs
     )
+    
+def DiT_L_4(input_size=64, pretrained=False, **kwargs):
+    return DiT(
+        input_size=input_size,
+        hidden_size=1152,
+        depth=24,
+        num_heads=16,
+        patch_size=4,
+        window_size=4,
+        window_block_indexes=tuple(range(0, 12, 2)),
+        attn_drop=0.1,
+        proj_drop=0.1,
+        **kwargs
+    )

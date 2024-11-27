@@ -6,7 +6,7 @@ from torch.utils.data import DataLoader
 from tqdm import tqdm
 import wandb
 
-from models.dit3d import DiT_S
+from models.dit3d import DiT_S, DiT_L_4
 from models.voxel_processor import VoxelProcessor
 from models.diffusion import VoxelDiffusion
 from models.augmentation import AugmentedVoxelDataset
@@ -49,15 +49,15 @@ def save_samples(model, processor, diffusion, category, epoch):
         "sample_variance": samples_128.var().item()
     })
 
-def train(category, n_epochs=100, batch_size=16, device="cuda"):
+def train(category, n_epochs=1000, batch_size=16, device="cuda"):
     """Training pipeline for binary voxel diffusion"""
     # Initialize wandb
     wandb.init(project="voxel-diffusion", name=f"{category}-training-augmented")
     
     # Initialize models
-    processor = VoxelProcessor().to(device)
-    model = DiT_S(
-        input_size=32,
+    processor = VoxelProcessor(target_size=64).to(device)
+    model = DiT_L_4(
+        input_size=64,
         in_channels=1,
     ).to(device)
     
@@ -142,7 +142,9 @@ def train(category, n_epochs=100, batch_size=16, device="cuda"):
 if __name__ == "__main__":
     # if torch.cuda.is_available():
     #     torch.cuda.empty_cache()
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    # device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    device = torch.device("cuda:3" if torch.cuda.is_available() else "cpu")
+    
     print(f"Using device: {device}")
     
     categories = ["chair", "airplane", "table"]
