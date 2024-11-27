@@ -224,6 +224,7 @@ class DiT(nn.Module):
         x = self.norm_final(x)
         x = self.output(x)
         x = self.unpatchify(x)
+        print(f"DiT output - mean: {x.mean():.4f}, std: {x.std():.4f}")
         
         return x
 

@@ -11,7 +11,7 @@ from models.voxel_processor import VoxelProcessor
 from models.diffusion import VoxelDiffusion
 from models.augmentation import AugmentedVoxelDataset
 
-def create_dataloader(data, batch_size=32, augment_factor=4, shuffle=True):
+def create_dataloader(data, batch_size=16, augment_factor=4, shuffle=True):
     """Create dataloader with augmentation for binary voxel data"""
     # Ensure data is binary
     # data = (data > 0.5).float()
@@ -49,7 +49,7 @@ def save_samples(model, processor, diffusion, category, epoch):
         "sample_variance": samples_128.var().item()
     })
 
-def train(category, n_epochs=100, batch_size=32, device="cuda"):
+def train(category, n_epochs=100, batch_size=16, device="cuda"):
     """Training pipeline for binary voxel diffusion"""
     # Initialize wandb
     wandb.init(project="voxel-diffusion", name=f"{category}-training-augmented")
@@ -105,6 +105,7 @@ def train(category, n_epochs=100, batch_size=32, device="cuda"):
             # Update model
             optimizer.zero_grad()
             loss.backward()
+            torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
             optimizer.step()
             
             # Update stats
@@ -136,8 +137,11 @@ def train(category, n_epochs=100, batch_size=32, device="cuda"):
             
             # Generate and save samples
             save_samples(model, processor, diffusion, category, epoch)
+            # torch.cuda.empty_cache()
 
 if __name__ == "__main__":
+    # if torch.cuda.is_available():
+    #     torch.cuda.empty_cache()
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Using device: {device}")
     
