@@ -9,3 +9,4 @@ generated_samples/*.npy
 wandb/
 checkpoints/
 *.pt
+.ipynb
