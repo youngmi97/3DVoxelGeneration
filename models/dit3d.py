@@ -224,7 +224,7 @@ class DiT(nn.Module):
         x = self.norm_final(x)
         x = self.output(x)
         x = self.unpatchify(x)
-        print(f"DiT output - mean: {x.mean():.4f}, std: {x.std():.4f}")
+        # print(f"DiT output - mean: {x.mean():.4f}, std: {x.std():.4f}")
         
         return x
 
@@ -282,6 +282,20 @@ def DiT_L_4(input_size=64, pretrained=False, **kwargs):
         input_size=input_size,
         hidden_size=1152,
         depth=24,
+        num_heads=16,
+        patch_size=4,
+        window_size=4,
+        window_block_indexes=tuple(range(0, 12, 2)),
+        attn_drop=0.1,
+        proj_drop=0.1,
+        **kwargs
+    )
+    
+def DiT_M_4(input_size=64, pretrained=False, **kwargs):
+    return DiT(
+        input_size=input_size,
+        hidden_size=1152,
+        depth=16,
         num_heads=16,
         patch_size=4,
         window_size=4,

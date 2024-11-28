@@ -6,7 +6,7 @@ from torch.utils.data import DataLoader
 from tqdm import tqdm
 import wandb
 
-from models.dit3d import DiT_S, DiT_L_4
+from models.dit3d import DiT_S, DiT_L_4, DiT_M_4
 from models.voxel_processor import VoxelProcessor
 from models.diffusion import VoxelDiffusion
 from models.augmentation import AugmentedVoxelDataset
@@ -27,12 +27,12 @@ def create_dataloader(data, batch_size=16, augment_factor=4, shuffle=True):
         pin_memory=True
     )
 
-def save_samples(model, processor, diffusion, category, epoch):
+def save_samples(model, processor, diffusion, category, epoch, input_size=32):
     """Generate and save binary voxel samples"""
     os.makedirs("samples", exist_ok=True)
     
     # Generate samples
-    samples_32 = diffusion.generate_samples(n_samples=32)
+    samples_32 = diffusion.generate_samples(n_samples=32, shape=(input_size, input_size, input_size))
     
     # Upscale to 128³
     samples_128 = processor.upscale(samples_32)
@@ -49,15 +49,15 @@ def save_samples(model, processor, diffusion, category, epoch):
         "sample_variance": samples_128.var().item()
     })
 
-def train(category, n_epochs=1000, batch_size=16, device="cuda"):
+def train(category, n_epochs=1000, batch_size=16, input_size=32, device="cuda"):
     """Training pipeline for binary voxel diffusion"""
     # Initialize wandb
     wandb.init(project="voxel-diffusion", name=f"{category}-training-augmented")
     
     # Initialize models
-    processor = VoxelProcessor(target_size=64).to(device)
-    model = DiT_L_4(
-        input_size=64,
+    processor = VoxelProcessor(target_size=input_size).to(device)
+    model = DiT_S(
+        input_size=input_size,
         in_channels=1,
     ).to(device)
     
@@ -136,18 +136,18 @@ def train(category, n_epochs=1000, batch_size=16, device="cuda"):
             }, checkpoint_path)
             
             # Generate and save samples
-            save_samples(model, processor, diffusion, category, epoch)
+            save_samples(model, processor, diffusion, category, epoch, input_size=input_size)
             # torch.cuda.empty_cache()
 
 if __name__ == "__main__":
     # if torch.cuda.is_available():
     #     torch.cuda.empty_cache()
     # device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    device = torch.device("cuda:3" if torch.cuda.is_available() else "cpu")
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     
     print(f"Using device: {device}")
     
     categories = ["chair", "airplane", "table"]
     for category in categories:
         print(f"\nTraining {category} model...")
-        train(category, device=device)
+        train(category, batch_size=4,device=device, input_size=64)
