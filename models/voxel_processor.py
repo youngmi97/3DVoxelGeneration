@@ -8,6 +8,7 @@ class VoxelProcessor(nn.Module):
         super().__init__()
         self.input_size = input_size
         self.target_size = target_size
+        self.output_size = output_size
         
     def downscale(self, x):
         """Downscale voxels from input_size to target_size"""
