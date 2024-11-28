@@ -56,7 +56,7 @@ def train(category, n_epochs=1000, batch_size=16, input_size=32, device="cuda"):
     
     # Initialize models
     processor = VoxelProcessor(target_size=input_size).to(device)
-    model = DiT_S(
+    model = DiT_L_4(
         input_size=input_size,
         in_channels=1,
     ).to(device)
@@ -143,11 +143,11 @@ if __name__ == "__main__":
     # if torch.cuda.is_available():
     #     torch.cuda.empty_cache()
     # device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    device = torch.device("cuda:1" if torch.cuda.is_available() else "cpu")
     
     print(f"Using device: {device}")
     
     categories = ["chair", "airplane", "table"]
     for category in categories:
         print(f"\nTraining {category} model...")
-        train(category, batch_size=4,device=device, input_size=64)
+        train(category, batch_size=4,device=device, input_size=32)

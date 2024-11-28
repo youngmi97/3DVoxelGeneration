@@ -4,7 +4,7 @@ import torch.nn.functional as F
 
 class VoxelProcessor(nn.Module):
     """Handles downscaling and upscaling of voxel data"""
-    def __init__(self, input_size=128, target_size=32):
+    def __init__(self, input_size=128, target_size=32, output_size=64):
         super().__init__()
         self.input_size = input_size
         self.target_size = target_size
@@ -17,6 +17,6 @@ class VoxelProcessor(nn.Module):
     
     def upscale(self, x):
         """Upscale voxels from target_size to input_size"""
-        x = F.interpolate(x, size=self.input_size, 
+        x = F.interpolate(x, size=self.output_size, 
                          mode='trilinear', align_corners=False)
         return (x > 0.5).float()
