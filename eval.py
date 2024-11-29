@@ -13,6 +13,8 @@ VOX_RES = (64, 64, 64) # 11.20 update: change the resolution of the voxels from 
 
 def voxel_to_pointcloud(voxel_grid: torch.Tensor, vox_res=VOX_RES):
     vox_res = np.array(vox_res)
+    # remove channel dimension
+    voxel_grid = voxel_grid.squeeze()
     voxel_indices = torch.argwhere(voxel_grid > 0)
     normalized_pts = voxel_indices / (vox_res - 1)
     normalized_pts = normalized_pts.reshape(-1, 3)
@@ -203,6 +205,7 @@ if __name__ == "__main__":
     test_set = torch.from_numpy(np.load(test_set_path))
     val_set = torch.from_numpy(np.load(val_set_path))
     X_ref = torch.cat([test_set, val_set]).float()
+    print(X_ref.shape)
 
     print("[*] Computing JSD...")
     jsd_score = jensen_shannon_divergence(X_gen, X_ref)

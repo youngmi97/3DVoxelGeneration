@@ -132,13 +132,17 @@ class DiT(nn.Module):
         self.patch_size = patch_size
         self.input_size = input_size
 
+        # Calculate patches info
+        self.n_patches = (input_size // patch_size) ** 3  # Should be 512 for input_size=32, patch_size=4
+        self.patch_dim = (input_size // patch_size, input_size // patch_size, input_size // patch_size)
+
         # Patch embedding
         self.patch_embed = nn.Conv3d(in_channels, hidden_size, 
                                    kernel_size=patch_size, stride=patch_size)
         
         # Calculate patches info
-        self.n_patches = (input_size // patch_size) ** 3
-        self.patch_dim = (input_size // patch_size, input_size // patch_size, input_size // patch_size)
+        # self.n_patches = (input_size // patch_size) ** 3
+        # self.patch_dim = (input_size // patch_size, input_size // patch_size, input_size // patch_size)
         
         # Embedders
         self.t_embedder = TimestepEmbedder(hidden_size)
@@ -209,6 +213,11 @@ class DiT(nn.Module):
         x: (B, C, H, W, D) tensor of spatial inputs
         t: (B,) tensor of diffusion timesteps
         """
+
+        B, C, H, W, D = x.shape
+        assert H == W == D == self.input_size, f"Input size must be {self.input_size}, got {H}"
+
+        
         x = self.patch_embed(x)
         x = x.flatten(2).transpose(1, 2)
         x = x + self.pos_embed
@@ -272,6 +281,7 @@ def DiT_S(input_size=32, **kwargs):
         patch_size=4,
         window_size=4,
         window_block_indexes=tuple(range(0, 12, 2)),
+        # window_block_indexes=tuple(range(12)),
         attn_drop=0.1,
         proj_drop=0.1,
         **kwargs
