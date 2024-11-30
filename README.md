@@ -25,3 +25,8 @@ To generate 1000 samples using checkpoints from df and sr
 python generate_samples.py chair
 
 ```
+
+## Reference
+[1] [Learning Representations and Generative Models for 3D Point Clouds](https://arxiv.org/abs/1707.02392)
+[2] [DiT-3D: Exploring Plain Diffusion Transformers for 3D Shape Generation](https://arxiv.org/abs/2307.01831)
+[3] [NeRF-SR: High-Quality Neural Radiance Fields using Supersampling](https://arxiv.org/abs/2112.01759)
