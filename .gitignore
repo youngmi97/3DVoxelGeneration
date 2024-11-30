@@ -10,3 +10,4 @@ wandb/
 checkpoints/
 *.pt
 .ipynb
+*.png

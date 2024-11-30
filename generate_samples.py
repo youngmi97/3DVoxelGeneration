@@ -1,5 +1,6 @@
 import torch
 import numpy as np
+import os
 from models.diffusion import VoxelDiffusion
 from models.dit3d import DiT_S
 from models.voxel_processor import VoxelProcessor
@@ -10,11 +11,18 @@ def generate_samples(category, n_samples=1000, batch_size=32, device="cuda"):
     processor = VoxelProcessor(input_size=64, target_size=32).to(device)
     diffusion = VoxelDiffusion(model, device=device)
 
+    diffusion_path = os.path.join("checkpoints", f"S_32_{category}", f"{category}_epoch_1000.pt")
+    sr_path = os.path.join("checkpoints", "SR", f"sr_{category}_epoch_v1.pt")
+    
+    print(f"Loading diffusion checkpoint from: {diffusion_path}")
+    print(f"Loading SR checkpoint from: {sr_path}")
+
     # Load checkpoints
-    diffusion_ckpt = torch.load(f"checkpoints/S_32_{category}/{category}_epoch_1000.pt")
+    diffusion_ckpt = torch.load(diffusion_path, map_location=device)
     model.load_state_dict(diffusion_ckpt['model_state_dict'])
-    sr_ckpt = torch.load(f"checkpoints/SR/sr_{category}_epoch_v1.pt")
+    sr_ckpt = torch.load(sr_path, map_location=device)
     processor.sr_module.load_state_dict(sr_ckpt['model_state_dict'])
+    
 
     all_samples = []
     model.eval()
